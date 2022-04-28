@@ -19,16 +19,23 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 
 import useQuiz from '../hooks/use-quiz';
 
 export default function EditQuiz() {
   let params = useParams();
-
   const { quiz, loading, mutate } = useQuiz(params.id);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useImmer([]);
   const navigate = useNavigate();
+
+  function handleSnackbarClose() {
+    setSnackbarOpen(false)
+  }
 
   function addQuestion() {
     setQuestions(draft => {
@@ -99,7 +106,10 @@ export default function EditQuiz() {
       title,
       questions
     })
-    .then(() => mutate())
+    .then(() => {
+      setSnackbarOpen(true)
+      mutate()
+    })
   }
 
   function handlePublish() {
@@ -226,6 +236,16 @@ export default function EditQuiz() {
           </Button>
         </form>
       </Paper>
+      <Snackbar
+        open={snackbarOpen}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert onClose={handleSnackbarClose} variant="filled" severity="success" sx={{ width: '100%' }}>
+          Quiz saved
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }
