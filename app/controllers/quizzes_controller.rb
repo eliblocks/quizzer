@@ -1,10 +1,12 @@
 class QuizzesController < ApplicationController
+  before_action :check_user_authentication!
+
   def index
-    render json: Quiz.all
+    render json: current_user.quizzes
   end
 
   def show
-    @quiz = Quiz.find(params[:id])
+    @quiz = current_user.quizzes.find(params[:id])
 
     render json: @quiz, include: { questions: { include: :answers }}
   end
@@ -22,11 +24,6 @@ class QuizzesController < ApplicationController
     @quiz.update(published: true)
 
     render json: @quiz
-  end
-
-  def score
-    @quiz = Quiz.find(params[:id])
-    render json: { correct: @quiz.score(params[:answers])}
   end
 
   def update
