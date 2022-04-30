@@ -29,7 +29,7 @@ export default function PublishedQuiz() {
       answers.push(Number(value))
     }
 
-    axios.post(`/published/${quiz.id}/score`, { answers: answers })
+    axios.post(`/published/${quiz.external_id}/score`, { answers: answers })
     .then(response => navigate(`/published/${quiz.id}/score?correct=${response.data.correct}&count=${quiz.questions.length}`))
   }
 

@@ -30,7 +30,7 @@ export default function Quizzes() {
           <div key={quiz.id}>
             <Grid container justifyContent="space-between">
               <div>
-                <Link to={quiz.published ? `/published/${quiz.id}` : `edit/${quiz.id}`} component={RouterLink}>
+                <Link to={quiz.published ? `/published/${quiz.external_id}` : `/quizzes/edit/${quiz.id}`} component={RouterLink}>
                   <Typography variant="h6" component="span" sx={{mr: 2}}>{quiz.title}</Typography>
                 </Link>
                 <Typography variant="body">

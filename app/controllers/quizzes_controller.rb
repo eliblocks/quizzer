@@ -21,7 +21,7 @@ class QuizzesController < ApplicationController
 
   def publish
     @quiz = current_user.quizzes.find(params[:id])
-    @quiz.update(published: true)
+    @quiz.update(published: true, external_id: SecureRandom.alphanumeric(6))
 
     render json: @quiz
   end

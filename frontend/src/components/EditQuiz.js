@@ -221,11 +221,11 @@ export default function EditQuiz() {
               <Divider />
             </div>
           )}
-
-          <Button variant="contained" onClick={addQuestion} sx={{ mt: 3, mb: 3}}>
-            + Add Question
-          </Button>
-
+          { questions.length < 10 &&
+            <Button variant="contained" onClick={addQuestion} sx={{ mt: 3, mb: 3}}>
+              + Add Question
+            </Button>
+          }
           <Button
             type="submit"
             fullWidth
